@@ -39,8 +39,23 @@
                 <input type="password" id="password" name="password">
             </div>
             <?php
+            /**
+             *  Passing through a GET request with a redirect displays a message inside
+             *  of the login screen, also sends the sessions password when it's generated
+             *  and unsets it's variables it straight away, this isn't secure and you shouldn't 
+             *  do this but I don't really have a database to work and a text file isn't ideal 
+             *  so it'll do for showing what it'd do in theory with unique session ids.
+             */
             if(isset($_GET['msg'])) {
-                echo "<p style='color:red;font-weight:bold'>" . $_GET['msg'] . "</p>";
+                session_start();
+                if(isset($_SESSION['password'])) {
+                    echo "<p>Your generated password is: <span style='font-weight:bold'>" . $_SESSION['password'] . "</span></p>";
+                    session_unset();
+               
+                }
+                if(isset($_GET['msg'])) {
+                    echo "<p style='color:red;font-weight:bold'>" . $_GET['msg'] . "</p>";
+                }
             }
             ?>
             <div>

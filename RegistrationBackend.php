@@ -20,6 +20,7 @@ class RegistrationBackend {
     function handle() {
         if (isset($_POST['register'])) {
             $attempt = array("username" => $_POST['username'], "password" => $_POST['password']);
+            session_start();
             $attempt = $this->validate($attempt);
             $this->submitAccount($attempt);
             $this->redirect("login.php", "Account created!<br>Please login with the information associated with it.");
@@ -47,6 +48,7 @@ class RegistrationBackend {
         if(empty($account['password'])) {
             $password = substr(str_shuffle(self::VALID_CHARACTERS), 0, max(8, min($_POST['length'], 32)));
             $account['password'] = $password;
+            $_SESSION['password'] = $password;
         }
         if(!preg_match(self::USERNAME_REGEX, $account['username'])) {
             $error .= "Username must be Alphanumeric characters and between 3 to 16 characters long.<br>";
