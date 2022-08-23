@@ -42,9 +42,9 @@
             /**
              *  Passing through a GET request with a redirect displays a message inside
              *  of the login screen, also sends the sessions password when it's generated
-             *  and unsets it's variables it straight away, this isn't secure and you shouldn't 
-             *  do this but I don't really have a database to work and a text file isn't ideal 
-             *  so it'll do for showing what it'd do in theory with unique session ids.
+             *  and unsets it's variables straight away, this isn't secure and you shouldn't 
+             *  do this but I don't really have a database to work with and a text file isn't 
+             *  ideal so it'll do for showing what it'd do in theory with unique session ids.
              */
             if(isset($_GET['msg'])) {
                 session_start();
