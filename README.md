@@ -1,4 +1,4 @@
-# SimpleLogin
+# Basic Login System
 
 <p>A simple login and registration system for administrators to use when accessing the Gelos portal.</p>
 
