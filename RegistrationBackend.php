@@ -71,7 +71,7 @@ class RegistrationBackend {
      */
     function submitAccount($account) {
         $file = self::ACCOUNTS_FILE;
-        $contents = file_exists($file) ? fopen($file, "r") : $this->returnError("User database error.");
+        $contents = file_exists($file) ? fopen($file, "r") : $this->redirect("register.php", "User database error.");
         while (!feof($contents)) {
             $line = fgets($contents);
             if(!empty($line)) {
