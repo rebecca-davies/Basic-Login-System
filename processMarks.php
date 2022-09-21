@@ -31,69 +31,53 @@
     <main>
         <h1>Calculation of your marks</h1>
         <?php
-        //read the 5 marks
-        if(empty($_POST["mark1"]))
-        {
-            echo "<p>Please supply a value for mark 1</p>";
-        }
-        else
-        {
-            $mark1 = (int)$_POST["mark1"];
-        }
-
-        if(empty($_POST["mark2"]))
-        {
-            echo "<p>Please supply a value for mark 2</p>";
-        }
-        else
-        {
-            $mark2 = (int)$_POST["mark2"];
-        }
-
-        if(empty($_POST["mark3"]))
-        {
-            echo "<p>Please supply a value for mark 3</p>";
-        }
-        else
-        {
-            $mark3 = (int)$_POST["mark3"];
-        }
-
-        if(empty($_POST["mark4"]))
-        {
-            echo "<p>Please supply a value for mark 4</p>";
-        }
-        else
-        {
-            $mark4 = (int)$_POST["mark4"];
-        }
-
-        if(empty($_POST["mark5"]))
-        {
-            echo "<p>Please supply a value for mark 5</p>";
-        }
-        else
-        {
-            $mark5 = (int)$_POST["mark5"];
-        }
-
-        //create array with marks
-        $marks = [$mark1, $mark2, $mark3, $mark4, $mark5];
-
-        $total = 0;
-        //display the array and calculate sum
-        foreach($marks as $mark)
-        {
-            echo "<p>$mark</p>";
-            $total = $total + $mark;
-        }
+        //Store marks in an array to be processed later
+        $marks = array(
+            $_POST["mark1"],
+            $_POST["mark2"],
+            $_POST["mark3"],
+            $_POST["mark4"],
+            $_POST["mark5"]);
         
-        //calculate the average
-        $average = $total / 5;
+        $error = "";    //An error message to be displayed if fault detected
+        $total = 0;     //The total of t he marks
 
-        //display sum and average
-        echo "<p>The sum of your marks is: $total</p>";
-        echo "<p>The average of your marks is: $average</p>";
+        /*
+        *   Loops through the marks array, passing the key/value to be used
+        *   when validating the mark and creating error outputs if fault detected.
+        *   
+        *   If the mark is empty, return an error saying which mark was empty.
+        *   If the mark is outside the 0-100 bounds, return an error saying which mark exceeds it.
+        *   If the mark is not a numeral, return an error saying which mark is affected.
+        *   If all the checks pass then add it to the total.
+        */
+        foreach($marks as $key => $mark) { 
+            $index = ++$key;
+            if(empty($mark)) {
+                $error .= "<p>Mark $index cannot be empty.</p>";
+            }
+            if($mark < 0 || $mark > 100) {
+                $error .= "<p>Mark $index cannot exceed 0-100 bounds.</p>";
+            }
+            if(!is_numeric($mark) && !empty($mark)) {
+                $error .= "<p>Mark $index is not a number</p>";
+            }
+            if(empty($error)) {
+                $total = $total + $mark;
+            }
+        }
+
+        /*
+        *   If any errors exist, display the error otherwise continue execution and
+        *   calculate the average then displaying the sum and the average.
+        */
+        if(!empty($error)) {
+            echo $error;
+        } else {
+            $average = $total / 5;
+            echo "<p>The sum of your marks is: $total</p>";
+            echo "<p>The average of your marks is: $average</p>";
+        }
         ?>
         
     </main>
